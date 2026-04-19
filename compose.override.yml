@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finance-manager:dev
+    container_name: finance-manager-api
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://postgres:postgres@postgres/finance_manager?sslmode=disable
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - finance-manager-network
+    restart: unless-stopped
