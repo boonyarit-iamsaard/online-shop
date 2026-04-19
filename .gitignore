@@ -1,12 +1,13 @@
 # Build output
-tmp/
+*.dll
+*.dylib
 *.exe
 *.exe~
-*.dll
-*.so
-*.dylib
-*.test
 *.out
+*.so
+*.test
+bin/
+tmp/
 
 # Environment
 .env
@@ -17,9 +18,9 @@ tmp/
 vendor/
 
 # IDE
+*.iml
 .idea/
 .vscode/
-*.iml
 
 # OS
 .DS_Store
