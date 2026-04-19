@@ -1,0 +1,25 @@
+# Normalize line endings to LF in the repo and on checkout.
+# This keeps WSL, Windows, and macOS consistent.
+* text=auto eol=lf
+
+# Go source
+*.go text eol=lf
+go.mod text eol=lf
+go.sum text eol=lf
+
+# Shell / scripts
+*.sh text eol=lf
+
+# Config / data
+*.toml text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.env  text eol=lf
+*.md   text eol=lf
+
+# Binaries — never diff or merge
+*.exe binary
+*.dll binary
+*.so  binary
+*.a   binary
