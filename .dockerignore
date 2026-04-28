@@ -1,0 +1,15 @@
+.git
+.github
+.gitignore
+.idea
+.vscode
+
+.env
+.env.*
+!.env.example
+
+bin
+tmp
+
+compose.override.yml
+compose.yml
