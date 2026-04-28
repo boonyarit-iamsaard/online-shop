@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/boonyarit-iamsaard/online-shop/internal/config"
 	"github.com/boonyarit-iamsaard/online-shop/internal/database"
 	"github.com/boonyarit-iamsaard/online-shop/internal/logger"
 	"github.com/boonyarit-iamsaard/online-shop/internal/server"
@@ -24,20 +25,15 @@ func main() {
 		_ = log.Sync()
 	}(log)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		dsn = "postgres://postgres:postgres@localhost/finance_manager?sslmode=disable"
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal("load config failed", zap.Error(err))
 	}
 
 	startupCtx, startupCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer startupCancel()
 
-	db, err := database.NewPostgresPool(startupCtx, dsn)
+	db, err := database.NewPostgresPool(startupCtx, cfg.DatabaseURL)
 	if err != nil {
 		log.Fatal("database connection failed", zap.Error(err))
 	}
@@ -45,16 +41,16 @@ func main() {
 
 	router := server.NewRouter(log, db).Engine()
 
-	s := &http.Server{
-		Addr:              ":" + port,
+	httpServer := &http.Server{
+		Addr:              ":" + cfg.Port,
 		Handler:           router,
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 
 	go func() {
-		log.Info("starting server", zap.String("port", port))
+		log.Info("starting server", zap.String("port", cfg.Port))
 
-		if err := s.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal("server error", zap.Error(err))
 		}
 	}()
@@ -68,9 +64,9 @@ func main() {
 	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer shutdownCancel()
 
-	if err := s.Shutdown(shutdownCtx); err != nil {
+	if err := httpServer.Shutdown(shutdownCtx); err != nil {
 		log.Error("graceful shutdown failed", zap.Error(err))
-		if err := s.Close(); err != nil {
+		if err := httpServer.Close(); err != nil {
 			log.Fatal("force shutdown failed", zap.Error(err))
 		}
 		return
