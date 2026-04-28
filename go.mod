@@ -1,4 +1,4 @@
-module github.com/boonyarit-iamsaard/finance-manager
+module github.com/boonyarit-iamsaard/online-shop
 
 go 1.26.2
 

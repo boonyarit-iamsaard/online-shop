@@ -3,16 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: finance-manager:dev
-    container_name: finance-manager-api
+    image: online-shop:dev
+    container_name: online-shop-api
     environment:
       PORT: 8080
-      DATABASE_URL: postgres://postgres:postgres@postgres/finance_manager?sslmode=disable
+      DATABASE_URL: postgres://postgres:postgres@postgres/online_shop?sslmode=disable
     ports:
       - "8080:8080"
     depends_on:
       postgres:
         condition: service_healthy
     networks:
-      - finance-manager-network
+      - online-shop-network
     restart: unless-stopped

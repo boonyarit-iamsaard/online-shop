@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/boonyarit-iamsaard/finance-manager/internal/database"
-	"github.com/boonyarit-iamsaard/finance-manager/internal/logger"
-	"github.com/boonyarit-iamsaard/finance-manager/internal/server"
+	"github.com/boonyarit-iamsaard/online-shop/internal/database"
+	"github.com/boonyarit-iamsaard/online-shop/internal/logger"
+	"github.com/boonyarit-iamsaard/online-shop/internal/server"
 	"go.uber.org/zap"
 )
 

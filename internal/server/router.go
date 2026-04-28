@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/boonyarit-iamsaard/finance-manager/internal/health"
+	"github.com/boonyarit-iamsaard/online-shop/internal/health"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"go.uber.org/zap"
