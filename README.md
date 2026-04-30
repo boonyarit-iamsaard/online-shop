@@ -6,7 +6,7 @@ Backend API service for an online shop, built with Go and deployed on Railway.
 
 - **Go 1.26.2** — API service runtime
 - **Gin** — HTTP routing
-- **PostgreSQL 17** — primary database
+- **PostgreSQL 18** — primary database
 - **Viper** — environment and `.env` configuration loading
 - **Zap** — structured logging
 - **Docker** — containerized builds and local stack
